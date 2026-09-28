@@ -1,0 +1,6 @@
+node_modules/
+dist/
+sdk-config.json
+credentials.json
+.access_token.json
+.claude/

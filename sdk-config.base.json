@@ -1,0 +1,17 @@
+{
+  "comment": "Non-secret Launchpad SDK settings. OAuth credentials live in credentials.json and are merged in by scripts/generate-sdk-config.js to produce sdk-config.json.",
+  "theme": "light",
+  "authConfig": {
+    "authService": "pega",
+    "mashupGrantType": "authCode"
+  },
+  "serverConfig": {
+    "serverType": "launchpad",
+    "infinityRestServerUrl_comment": "Dev server URL; proxies /dx requests to the real Launchpad server URL configured in webpack.config.js",
+    "infinityRestServerUrl": "http://localhost:6006",
+    "appAlias": "CorporateCreditDecisioning",
+    "sdkContentServerUrl": "",
+    "appPortal": "",
+    "appMashupCaseType": "CreditDecisionWorkflow"
+  }
+}
