@@ -109,7 +109,7 @@ module.exports = (env, argv) => {
         {
           // TODO: replace with your Launchpad app server URL (e.g. https://myapp-xyz-prod.pegalaunchpad.com)
           context: ['/dx'],
-          target: 'https://REPLACE_WITH_YOUR_LAUNCHPAD_SERVER.pegalaunchpad.com',
+          target: 'https://cluster-s14p4m3b12mthyp4qpszrxb0-frontend-us-east-1.cluster.lp.pegaservice.net',
           changeOrigin: true,
           secure: true
         }
