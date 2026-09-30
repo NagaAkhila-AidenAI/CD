@@ -6,6 +6,8 @@ import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import ButtonBase from '@mui/material/ButtonBase';
 import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
+import SectionPanel, { Field, FieldCard } from './SectionPanel';
 
 export interface ExistingBorrowerOption {
   code: string;
@@ -32,57 +34,58 @@ interface ExistingBorrowerSearchProps {
 
 export default function ExistingBorrowerSearch({ value, onChange, onCreateNew }: ExistingBorrowerSearchProps) {
   return (
-    <Box sx={{ maxWidth: 640 }}>
-      <Typography variant='body2' sx={{ fontWeight: 600, mb: 0.5 }}>
-        Borrower Name
-      </Typography>
-      <Autocomplete
-        options={SAMPLE_EXISTING_BORROWERS}
-        value={value}
-        onChange={(_, newValue) => onChange(newValue)}
-        getOptionLabel={(option) => option.name || option.code}
-        isOptionEqualToValue={(option, val) => option.code === val.code}
-        ListboxProps={{ sx: { maxHeight: 260, overflowY: 'auto' } }}
-        renderOption={(props, option) => (
-          <Box component='li' {...props} sx={{ display: 'block !important' }}>
-            {option.name && (
-              <Typography variant='body2' sx={{ fontWeight: 500 }}>
-                {option.name}
-              </Typography>
+    <SectionPanel title='Borrower Search' icon={<SearchIcon />}>
+      <FieldCard>
+        <Field label='Borrower Name'>
+          <Autocomplete
+            options={SAMPLE_EXISTING_BORROWERS}
+            value={value}
+            onChange={(_, newValue) => onChange(newValue)}
+            getOptionLabel={(option) => option.name || option.code}
+            isOptionEqualToValue={(option, val) => option.code === val.code}
+            ListboxProps={{ sx: { maxHeight: 260, overflowY: 'auto' } }}
+            renderOption={(props, option) => (
+              <Box component='li' {...props} sx={{ display: 'block !important' }}>
+                {option.name && (
+                  <Typography variant='body2' sx={{ fontWeight: 500 }}>
+                    {option.name}
+                  </Typography>
+                )}
+                <Typography variant='caption' color='text.secondary'>
+                  {option.code}
+                </Typography>
+              </Box>
             )}
-            <Typography variant='caption' color='text.secondary'>
-              {option.code}
-            </Typography>
-          </Box>
-        )}
-        renderInput={(params) => <TextField {...params} size='small' placeholder='Search or create a borrower...' />}
-        PaperComponent={({ children, ...paperProps }) => (
-          <Paper {...paperProps}>
-            {children}
-            {onCreateNew && (
-              <>
-                <Divider />
-                <ButtonBase
-                  onMouseDown={(e) => e.preventDefault()}
-                  onClick={onCreateNew}
-                  sx={{
-                    width: '100%',
-                    justifyContent: 'flex-start',
-                    gap: 0.5,
-                    px: 2,
-                    py: 1,
-                    color: 'primary.main',
-                    fontSize: 14
-                  }}
-                >
-                  <AddIcon fontSize='small' />
-                  Create new
-                </ButtonBase>
-              </>
+            renderInput={(params) => <TextField {...params} size='small' placeholder='Search or create a borrower...' />}
+            PaperComponent={({ children, ...paperProps }) => (
+              <Paper {...paperProps}>
+                {children}
+                {onCreateNew && (
+                  <>
+                    <Divider />
+                    <ButtonBase
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={onCreateNew}
+                      sx={{
+                        width: '100%',
+                        justifyContent: 'flex-start',
+                        gap: 0.5,
+                        px: 2,
+                        py: 1,
+                        color: 'primary.main',
+                        fontSize: 14
+                      }}
+                    >
+                      <AddIcon fontSize='small' />
+                      Create new
+                    </ButtonBase>
+                  </>
+                )}
+              </Paper>
             )}
-          </Paper>
-        )}
-      />
-    </Box>
+          />
+        </Field>
+      </FieldCard>
+    </SectionPanel>
   );
 }

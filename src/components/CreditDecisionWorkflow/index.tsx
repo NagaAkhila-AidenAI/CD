@@ -31,7 +31,7 @@ export default function CreditDecisionWorkflow({
           flexGrow: 1,
           minHeight: 'calc(100vh - 112px)',
           p: 4,
-          background: 'linear-gradient(135deg, #eef7ff 0%, #cfe8ff 55%, #eef7ff 100%)'
+          background: 'linear-gradient(135deg, #f2f5f9 0%, #d6e0ef 55%, #f2f5f9 100%)'
         }}
       >
         <HeroDecoration />
@@ -40,9 +40,9 @@ export default function CreditDecisionWorkflow({
           variant='h3'
           sx={{
             position: 'relative',
-            fontFamily: '"Baloo 2", "Roboto", sans-serif',
+            fontFamily: '"Baloo 2", "Nunito Sans", sans-serif',
             fontWeight: 700,
-            color: '#1c4a80',
+            color: '#003781',
             letterSpacing: -1,
             mb: 3
           }}
@@ -112,7 +112,7 @@ function HeroDecoration() {
           width: 340,
           height: 340,
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(191,224,255,0.5) 60%, rgba(191,224,255,0) 75%)',
+          background: 'radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(184,202,230,0.5) 60%, rgba(184,202,230,0) 75%)',
           animation: 'hero-float 9s ease-in-out infinite'
         }}
       />

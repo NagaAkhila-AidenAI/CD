@@ -14,6 +14,9 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
+import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import SectionPanel from './SectionPanel';
 
 export interface OwnershipRow {
   directorName: string;
@@ -61,9 +64,11 @@ const COLUMNS: { key: keyof OwnershipRow; label: string }[] = [
 interface OwnershipStructureTableProps {
   rows: OwnershipRow[];
   onRowsChange: (rows: OwnershipRow[]) => void;
+  // Locked until the borrower profile has been submitted
+  locked?: boolean;
 }
 
-export default function OwnershipStructureTable({ rows, onRowsChange }: OwnershipStructureTableProps) {
+export default function OwnershipStructureTable({ rows, onRowsChange, locked = false }: OwnershipStructureTableProps) {
   const updateCell = (index: number, field: keyof OwnershipRow, value: string) => {
     const next = rows.slice();
     next[index] = { ...next[index], [field]: value };
@@ -79,17 +84,34 @@ export default function OwnershipStructureTable({ rows, onRowsChange }: Ownershi
   };
 
   return (
-    <Box sx={{ mt: 4 }}>
-      <Typography variant='subtitle1' sx={{ fontWeight: 700, mb: 1 }}>
-        Ownership Structure
-      </Typography>
+    <SectionPanel title='Ownership Structure' icon={<AccountTreeOutlinedIcon />}>
+      {locked ? (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 1,
+            py: 4,
+            backgroundColor: '#f7f7f7',
+            borderRadius: 1,
+            color: 'text.secondary'
+          }}
+        >
+          <LockOutlinedIcon fontSize='small' />
+          <Typography variant='body2'>
+            Click Submit on the borrower profile to add the ownership structure.
+          </Typography>
+        </Box>
+      ) : (
+        <>
 
-      <TableContainer component={Paper} variant='outlined'>
+      <TableContainer component={Paper} variant='outlined' sx={{ borderRadius: 1.5 }}>
         <Table size='small'>
           <TableHead>
             <TableRow>
               {COLUMNS.map((col) => (
-                <TableCell key={col.key} sx={{ fontWeight: 700 }}>
+                <TableCell key={col.key} align='center' sx={{ py: 1.5 }}>
                   {col.label}
                 </TableCell>
               ))}
@@ -181,6 +203,8 @@ export default function OwnershipStructureTable({ rows, onRowsChange }: Ownershi
       >
         Add
       </Button>
-    </Box>
+        </>
+      )}
+    </SectionPanel>
   );
 }

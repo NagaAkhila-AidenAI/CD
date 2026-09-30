@@ -3,38 +3,38 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import CircularProgress from '@mui/material/CircularProgress';
-import PersonIcon from '@mui/icons-material/Person';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import FolderIcon from '@mui/icons-material/Folder';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
+import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AppTopBars from '../AppTopBars';
 import { usePega } from '../../context/PegaReadyContext';
 import BorrowerProfileForm, {
+  SAMPLE_BUSINESS_COUNTRY_CODE,
   SAMPLE_BUSINESS_DATA,
   SAMPLE_INDIVIDUAL_DATA
 } from './BorrowerProfileForm';
 import type { BusinessType } from './BorrowerProfileForm';
 import OwnershipStructureTable, { SAMPLE_OWNERSHIP_ROW } from './OwnershipStructureTable';
 import type { OwnershipRow } from './OwnershipStructureTable';
-import FundingRequirementsForm, { SAMPLE_FUNDING_DATA } from './FundingRequirementsForm';
+import FundingRequirementsForm, { SAMPLE_FUNDING_DATA, getMissingFundingFields } from './FundingRequirementsForm';
 import DocumentsForm, { SAMPLE_DOCUMENT_NAMES } from './DocumentsForm';
 import ExistingBorrowerSearch from './ExistingBorrowerSearch';
 import type { ExistingBorrowerOption } from './ExistingBorrowerSearch';
 
 const SECTIONS = [
-  { key: 'borrowerProfile', label: 'Borrower Profile', icon: <PersonIcon /> },
-  { key: 'fundingRequirements', label: 'Funding Requirements', icon: <AccountBalanceIcon /> },
-  { key: 'documents', label: 'Documents', icon: <FolderIcon /> }
+  { key: 'borrowerProfile', label: 'Borrower Profile', icon: <PersonOutlineIcon /> },
+  { key: 'fundingRequirements', label: 'Funding Requirements', icon: <AccountBalanceOutlinedIcon /> },
+  { key: 'documents', label: 'Documents', icon: <FolderOutlinedIcon /> }
 ] as const;
 
 type SectionKey = (typeof SECTIONS)[number]['key'];
 type IndividualStep = 'fields' | 'borrowerSearch' | 'ownership';
+type CorporateStep = 'profile' | 'ownership';
 
 interface BorrowerCaseProps {
   mode: 'new' | 'existing';
@@ -50,9 +50,11 @@ export default function BorrowerCase({ mode, onBack, onWithdraw, onSubmitNewBorr
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [ownershipRows, setOwnershipRows] = useState<OwnershipRow[]>([]);
   const [fundingData, setFundingData] = useState<Record<string, string>>({});
+  const [showFundingErrors, setShowFundingErrors] = useState(false);
   const [documentNames, setDocumentNames] = useState<string[]>([]);
   const [selectedExistingBorrower, setSelectedExistingBorrower] = useState<ExistingBorrowerOption | null>(null);
   const [individualStep, setIndividualStep] = useState<IndividualStep>('fields');
+  const [corporateStep, setCorporateStep] = useState<CorporateStep>('profile');
   const { isPegaReady, PegaContainer } = usePega();
 
   const isNewBorrowerProfile = mode === 'new' && activeSection === 'borrowerProfile';
@@ -60,6 +62,7 @@ export default function BorrowerCase({ mode, onBack, onWithdraw, onSubmitNewBorr
   const isFundingRequirements = activeSection === 'fundingRequirements';
   const isDocuments = activeSection === 'documents';
   const isIndividualFlow = isNewBorrowerProfile && businessType === 'individual';
+  const isCorporateFlow = isNewBorrowerProfile && businessType === 'business';
   const isFormSection =
     (isNewBorrowerProfile && !(isIndividualFlow && individualStep === 'borrowerSearch')) ||
     isFundingRequirements ||
@@ -69,6 +72,7 @@ export default function BorrowerCase({ mode, onBack, onWithdraw, onSubmitNewBorr
   const handleBusinessTypeChange = (value: BusinessType) => {
     setBusinessType(value);
     setIndividualStep('fields');
+    setCorporateStep('profile');
     setSelectedExistingBorrower(null);
   };
 
@@ -102,11 +106,11 @@ export default function BorrowerCase({ mode, onBack, onWithdraw, onSubmitNewBorr
         } else if (individualStep === 'ownership') {
           setOwnershipRows([{ ...SAMPLE_OWNERSHIP_ROW }]);
         }
+      } else if (isCorporateFlow && corporateStep === 'ownership') {
+        setOwnershipRows([{ ...SAMPLE_OWNERSHIP_ROW }]);
       } else {
         setFormData(SAMPLE_BUSINESS_DATA);
-        if (businessType === 'business') {
-          setOwnershipRows([{ ...SAMPLE_OWNERSHIP_ROW }]);
-        }
+        setCountryCode(SAMPLE_BUSINESS_COUNTRY_CODE);
       }
     } else if (isExistingBorrowerSearch && selectedExistingBorrower) {
       setOwnershipRows([{ ...SAMPLE_OWNERSHIP_ROW }]);
@@ -130,6 +134,10 @@ export default function BorrowerCase({ mode, onBack, onWithdraw, onSubmitNewBorr
           });
           setActiveSection('fundingRequirements');
         }
+      } else if (isCorporateFlow && corporateStep === 'profile') {
+        // Profile done: unlock the ownership structure and bring it into view
+        setCorporateStep('ownership');
+        setTimeout(() => document.getElementById('ownership-structure')?.scrollIntoView({ behavior: 'smooth' }), 0);
       } else {
         onSubmitNewBorrower(businessType, { ...formData, ownershipStructure: ownershipRows });
         setActiveSection('fundingRequirements');
@@ -139,6 +147,10 @@ export default function BorrowerCase({ mode, onBack, onWithdraw, onSubmitNewBorr
       console.log('Continue with existing borrower', selectedExistingBorrower);
       setActiveSection('fundingRequirements');
     } else if (isFundingRequirements) {
+      if (getMissingFundingFields(fundingData).length > 0) {
+        setShowFundingErrors(true);
+        return;
+      }
       // TODO: wire to the real funding-requirements case action once the DX API is connected
       console.log('Submit funding requirements', fundingData);
       setActiveSection('documents');
@@ -148,48 +160,90 @@ export default function BorrowerCase({ mode, onBack, onWithdraw, onSubmitNewBorr
     }
   };
 
+  const actionBar = (
+    <Stack direction='row' spacing={2} justifyContent='flex-end' alignItems='center' sx={{ pt: 1, pb: 3 }}>
+      <Button variant='outlined' color='inherit' onClick={onWithdraw} sx={{ textTransform: 'none', borderRadius: 2 }}>
+        Cancel
+      </Button>
+      {isFormSection && (
+        <Button
+          variant='outlined'
+          startIcon={<AutoAwesomeIcon fontSize='small' />}
+          onClick={handleFillSampleData}
+          disabled={isNewBorrowerProfile && !businessType}
+          sx={{ textTransform: 'none', borderRadius: 2, color: '#7c4dff', borderColor: '#7c4dff' }}
+        >
+          Fill with sample data
+        </Button>
+      )}
+      <Button
+        variant='contained'
+        onClick={handleSubmit}
+        disabled={
+          (isNewBorrowerProfile && !businessType) ||
+          (isIndividualFlow && individualStep === 'borrowerSearch') ||
+          (isExistingBorrowerSearch && !selectedExistingBorrower)
+        }
+        sx={{ textTransform: 'none', borderRadius: 2 }}
+      >
+        {isDocuments ? 'Submit Documents' : 'Submit'}
+      </Button>
+    </Stack>
+  );
+  // Corporate profile step: buttons sit between the profile and the (locked) ownership structure
+  const showInlineActionBar = isCorporateFlow && corporateStep === 'profile';
+
   return (
-    <Box sx={{ backgroundColor: 'background.default', minHeight: '100vh' }}>
+    <Box sx={{ backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
       <AppTopBars />
 
-      <Box sx={{ display: 'flex', minHeight: 'calc(100vh - 168px)' }}>
-        {/* Sidebar navigation */}
-        <Box
-          sx={{
-            width: 240,
-            flexShrink: 0,
-            backgroundColor: 'background.paper',
-            borderRight: '1px solid',
-            borderColor: 'divider'
-          }}
-        >
-          <List sx={{ py: 2 }}>
+      {/* White page card holding the tabs and the section panels */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: 'calc(100vh - 200px)',
+          mx: 3,
+          my: 2,
+          backgroundColor: 'background.paper',
+          borderRadius: 1.5,
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)'
+        }}
+      >
+        {/* Horizontal tab navigation */}
+        <Box sx={{ px: 4, pt: 1.5 }}>
+          <Tabs
+            value={activeSection}
+            onChange={(_, value: SectionKey) => setActiveSection(value)}
+            variant='scrollable'
+            scrollButtons='auto'
+            sx={{
+              '& .MuiTabs-indicator': { height: 3, borderRadius: 2 },
+              '& .MuiTab-root': {
+                textTransform: 'none',
+                fontSize: '1.05rem',
+                fontWeight: 600,
+                minHeight: 56,
+                mr: 3,
+                px: 0.5,
+                color: 'primary.main'
+              }
+            }}
+          >
             {SECTIONS.map((section) => (
-              <ListItemButton
+              <Tab
                 key={section.key}
-                selected={activeSection === section.key}
-                onClick={() => setActiveSection(section.key)}
-                sx={{
-                  mx: 1,
-                  mb: 0.5,
-                  borderRadius: 2,
-                  '&.Mui-selected': {
-                    backgroundColor: 'primary.main',
-                    color: '#fff',
-                    '& .MuiListItemIcon-root': { color: '#fff' },
-                    '&:hover': { backgroundColor: 'primary.dark' }
-                  }
-                }}
-              >
-                <ListItemIcon sx={{ minWidth: 36 }}>{section.icon}</ListItemIcon>
-                <ListItemText primary={section.label} />
-              </ListItemButton>
+                value={section.key}
+                label={section.label}
+                icon={section.icon}
+                iconPosition='start'
+              />
             ))}
-          </List>
+          </Tabs>
         </Box>
 
         {/* Main content */}
-        <Box sx={{ flexGrow: 1, minWidth: 0, p: 4, display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ flexGrow: 1, minWidth: 0, px: 4, pt: 2, pb: 3, display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ flexGrow: 1 }}>
             {isNewBorrowerProfile ? (
               isIndividualFlow && individualStep === 'borrowerSearch' ? (
@@ -211,7 +265,16 @@ export default function BorrowerCase({ mode, onBack, onWithdraw, onSubmitNewBorr
                     onCountryCodeChange={setCountryCode}
                   />
                   {businessType === 'business' && (
-                    <OwnershipStructureTable rows={ownershipRows} onRowsChange={setOwnershipRows} />
+                    <>
+                      {showInlineActionBar && actionBar}
+                      <Box id='ownership-structure'>
+                        <OwnershipStructureTable
+                          rows={ownershipRows}
+                          onRowsChange={setOwnershipRows}
+                          locked={corporateStep === 'profile'}
+                        />
+                      </Box>
+                    </>
                   )}
                 </>
               )
@@ -227,7 +290,11 @@ export default function BorrowerCase({ mode, onBack, onWithdraw, onSubmitNewBorr
                 )}
               </>
             ) : isFundingRequirements ? (
-              <FundingRequirementsForm formData={fundingData} onFieldChange={handleFundingFieldChange} />
+              <FundingRequirementsForm
+                formData={fundingData}
+                onFieldChange={handleFundingFieldChange}
+                showErrors={showFundingErrors}
+              />
             ) : isDocuments ? (
               <DocumentsForm fileNames={documentNames} onFileNamesChange={setDocumentNames} />
             ) : isPegaReady ? (
@@ -251,38 +318,11 @@ export default function BorrowerCase({ mode, onBack, onWithdraw, onSubmitNewBorr
           </Box>
 
           {/* Action bar */}
-          <Stack direction='row' spacing={2} justifyContent='flex-end' sx={{ pt: 3 }}>
-            <Button variant='outlined' color='inherit' onClick={onWithdraw} sx={{ textTransform: 'none', borderRadius: 2 }}>
-              Cancel
-            </Button>
-            {isFormSection && (
-              <Button
-                variant='outlined'
-                startIcon={<AutoAwesomeIcon fontSize='small' />}
-                onClick={handleFillSampleData}
-                disabled={isNewBorrowerProfile && !businessType}
-                sx={{ textTransform: 'none', borderRadius: 2, color: '#7c4dff', borderColor: '#7c4dff' }}
-              >
-                Fill with sample data
-              </Button>
-            )}
-            <Button
-              variant='contained'
-              onClick={handleSubmit}
-              disabled={
-                (isNewBorrowerProfile && !businessType) ||
-                (isIndividualFlow && individualStep === 'borrowerSearch') ||
-                (isExistingBorrowerSearch && !selectedExistingBorrower)
-              }
-              sx={{ textTransform: 'none', borderRadius: 2 }}
-            >
-              {isDocuments ? 'Submit Documents' : 'Submit'}
-            </Button>
-          </Stack>
+          {!showInlineActionBar && actionBar}
         </Box>
       </Box>
 
-      {/* Sits below the sidebar/content split, not inside the sidebar */}
+      {/* Sits below the main content */}
       <Box sx={{ px: 3, py: 1.5, borderTop: '1px solid', borderColor: 'divider' }}>
         <Button
           onClick={onBack}

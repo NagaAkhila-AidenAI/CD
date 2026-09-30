@@ -8,7 +8,7 @@
 // you to log in once through a real browser window — your OAuth client is
 // registered as "Authorization Code" grant, which by design requires a
 // human in the loop. No script can skip that step; this just automates
-// everything around it (opening the browser, catching the redirect,
+// everything around it (printing the sign-in link, catching the redirect,
 // exchanging the code for a token).
 //
 // IMPORTANT: this binds a local HTTP server on the redirectUri's port
@@ -18,6 +18,8 @@
 // USAGE
 // -----
 //   npm run authenticate
+//
+// The sign-in link is printed in the terminal; paste it into Chrome or Edge.
 //
 // On success, the token is written to .access_token.json (gitignored) at
 // the project root, for use like:
@@ -61,11 +63,21 @@ const config = {
   winTitle: 'Launchpad Authentication',
   // This window is opened by the OS browser (not window.open), so it can't auto-close itself —
   // this message is just so it doesn't show a blank/"undefined" page while you close the tab.
-  winBodyHtml: 'Authenticated — you can close this tab.'
+  winBodyHtml: 'Authenticated - you can close this tab.'
+};
+
+// @pega/auth uses a global `open` if one exists instead of launching the OS default browser.
+// Print the sign-in link instead, so it can be pasted into any browser (Chrome/Edge) — the
+// default browser on this machine isn't always a regular one. The returned object stands in
+// for the popup window the library polls for `closed`.
+globalThis.open = (url) => {
+  console.log('\nOpen this link in Chrome or Edge and sign in with your Launchpad company email:\n');
+  console.log(url);
+  console.log('\nWaiting for the sign-in to complete...');
+  return { closed: false, close() {} };
 };
 
 console.log(`Authenticating to ${authConfig.authorize} ...`);
-console.log('A browser window will open — log in with your Launchpad company email.');
 
 try {
   const auth = new PegaAuth(config);
