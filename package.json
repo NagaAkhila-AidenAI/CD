@@ -4,6 +4,7 @@
   "private": true,
   "description": "Custom React front end for Pega Launchpad, built with the Pega React SDK and Material UI",
   "scripts": {
+    "postinstall": "patch-package",
     "generate-sdk-config": "node scripts/generate-sdk-config.js",
     "prestart": "npm run generate-sdk-config",
     "preauthenticate": "npm run generate-sdk-config",
@@ -38,6 +39,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.6.4",
     "null-loader": "^4.0.1",
+    "patch-package": "^8.0.1",
     "sass": "^1.98.0",
     "sass-loader": "^16.0.5",
     "style-loader": "^4.0.0",

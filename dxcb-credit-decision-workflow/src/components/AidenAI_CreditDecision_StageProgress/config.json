@@ -1,0 +1,54 @@
+{
+  "name": "AidenAI_CreditDecision_StageProgress",
+  "label": "Stage Progress",
+  "description": "Shows a case status as the current stage with a mini stage tracker, for case lists",
+  "organization": "AidenAI",
+  "version": "1.0.0",
+  "library": "CreditDecision",
+  "allowedApplications": [],
+  "componentKey": "AidenAI_CreditDecision_StageProgress",
+  "type": "Field",
+  "subtype": "Text",
+  "icon": "StageProgress.svg",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Field label",
+      "format": "TEXT"
+    },
+    {
+      "key": "inputProperty",
+      "format": "PROPERTY",
+      "name": "inputProperty",
+      "label": "Status property (when not placed on the Status field itself)"
+    },
+    {
+      "name": "stages",
+      "label": "Stages in order (comma separated)",
+      "format": "TEXT"
+    },
+    {
+      "name": "showStepCount",
+      "label": "Show step count (e.g. 2 of 9)",
+      "format": "BOOLEAN",
+      "defaultValue": true
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "label": "@L $this.label",
+    "stages": "Application Intake, Screening Check, Credit Appraisal, Credit Rating, Committee Review, Sanction, Documentation Legal, Compliance Check, Disbursement",
+    "showStepCount": true,
+    "detailFVLItem": true
+  }
+}

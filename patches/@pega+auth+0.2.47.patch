@@ -1,0 +1,15 @@
+diff --git a/node_modules/@pega/auth/lib/sdk-auth-manager/authManager.js b/node_modules/@pega/auth/lib/sdk-auth-manager/authManager.js
+index 62d8010..6ca9e28 100644
+--- a/node_modules/@pega/auth/lib/sdk-auth-manager/authManager.js
++++ b/node_modules/@pega/auth/lib/sdk-auth-manager/authManager.js
+@@ -396,6 +396,10 @@ class AuthManager {
+                 if (sdkConfigAuth.clientSecret) {
+                     pegaAuthConfig.clientSecret = sdkConfigAuth.clientSecret;
+                 }
++                // Allow turning PKCE off for OAuth clients that reject it (e.g. confidential Launchpad clients)
++                if (sdkConfigAuth.noPKCE) {
++                    pegaAuthConfig.noPKCE = true;
++                }
+                 if (!bInfinity) {
+                     delete pegaAuthConfig.authService;
+                     delete pegaAuthConfig.appAlias;

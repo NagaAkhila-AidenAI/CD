@@ -1,0 +1,676 @@
+{
+  "name": "AidenAI_CreditDecision_SectionCards",
+  "label": "Section Cards",
+  "description": "Groups a form's fields into titled cards with a summary band, status badges and read-only label and value pairs",
+  "organization": "AidenAI",
+  "version": "1.7.0",
+  "library": "CreditDecision",
+  "allowedApplications": [],
+  "componentKey": "AidenAI_CreditDecision_SectionCards",
+  "type": "Template",
+  "subtype": "FORM",
+  "icon": "SectionCards.svg",
+  "properties": [
+    {
+      "format": "SELECT",
+      "name": "headerStyle",
+      "label": "Section header",
+      "defaultValue": "NONE",
+      "source": [
+        {
+          "key": "NONE",
+          "value": "None"
+        },
+        {
+          "key": "STRIP",
+          "value": "Compact strip with case facts"
+        }
+      ]
+    },
+    {
+      "format": "TEXT",
+      "name": "headerTitle",
+      "label": "Header title (leave empty to avoid repeating the step title)"
+    },
+    {
+      "format": "TEXT",
+      "name": "headerDescription",
+      "label": "Header description"
+    },
+    {
+      "format": "SELECT",
+      "name": "headerIcon",
+      "label": "Header icon",
+      "defaultValue": "document",
+      "source": [
+        {
+          "key": "document",
+          "value": "Document"
+        },
+        {
+          "key": "wallet",
+          "value": "Wallet"
+        },
+        {
+          "key": "user",
+          "value": "Person"
+        },
+        {
+          "key": "building",
+          "value": "Building"
+        },
+        {
+          "key": "users",
+          "value": "People"
+        },
+        {
+          "key": "bank",
+          "value": "Bank"
+        },
+        {
+          "key": "calendar",
+          "value": "Calendar"
+        },
+        {
+          "key": "flag",
+          "value": "Flag"
+        },
+        {
+          "key": "folder",
+          "value": "Folder"
+        },
+        {
+          "key": "shield",
+          "value": "Shield"
+        }
+      ]
+    },
+    {
+      "format": "TEXT",
+      "name": "headerFacts",
+      "label": "Header facts (comma separated: Case ID, Status, field labels or property names)"
+    },
+    {
+      "format": "TEXT",
+      "name": "headerToneFacts",
+      "label": "Facts shown as colored status badges (comma separated)"
+    },
+    {
+      "format": "BOOLEAN",
+      "name": "headerProgress",
+      "label": "Show overall progress in the header",
+      "defaultValue": true
+    },
+    {
+      "format": "SELECT",
+      "name": "cardLayout",
+      "label": "Card layout",
+      "defaultValue": "GRID",
+      "source": [
+        {
+          "key": "GRID",
+          "value": "Two cards per row on wide screens"
+        },
+        {
+          "key": "STACKED",
+          "value": "One card per row"
+        }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "name": "cardFont",
+      "label": "Card font",
+      "defaultValue": "MODERN",
+      "source": [
+        {
+          "key": "MODERN",
+          "value": "Modern (Segoe UI)"
+        },
+        {
+          "key": "CLEAN",
+          "value": "Clean (Calibri)"
+        },
+        {
+          "key": "FRIENDLY",
+          "value": "Friendly (Trebuchet)"
+        },
+        {
+          "key": "CLASSIC",
+          "value": "Classic serif (Georgia)"
+        },
+        {
+          "key": "THEME",
+          "value": "Launchpad theme font"
+        }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "name": "NumCols",
+      "label": "Columns in each card",
+      "defaultValue": "AUTO",
+      "source": [
+        {
+          "key": "AUTO",
+          "value": "Automatic (fit to width)"
+        },
+        {
+          "key": "1",
+          "value": "One"
+        },
+        {
+          "key": "2",
+          "value": "Two"
+        },
+        {
+          "key": "3",
+          "value": "Three"
+        },
+        {
+          "key": "4",
+          "value": "Four"
+        }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "name": "fieldDisplay",
+      "label": "Field display",
+      "defaultValue": "READONLY_TEXT",
+      "source": [
+        {
+          "key": "READONLY_TEXT",
+          "value": "Read-only text"
+        },
+        {
+          "key": "STANDARD",
+          "value": "Editable fields (template style)"
+        }
+      ]
+    },
+    {
+      "format": "BOOLEAN",
+      "name": "highlightFirst",
+      "label": "Show the first card as a summary band",
+      "defaultValue": false
+    },
+    {
+      "format": "BOOLEAN",
+      "name": "showCompleteness",
+      "label": "Show how many fields are filled in each card",
+      "defaultValue": true
+    },
+    {
+      "format": "BOOLEAN",
+      "name": "wideText",
+      "label": "Long text fields (text areas, rich text) take the full width",
+      "defaultValue": true
+    },
+    {
+      "format": "TEXT",
+      "name": "badgeLabels",
+      "label": "Fields to show as status badges (labels, comma separated)"
+    },
+    {
+      "format": "TEXT",
+      "name": "labelA",
+      "label": "Card A title"
+    },
+    {
+      "format": "SELECT",
+      "name": "iconA",
+      "label": "Card A icon",
+      "defaultValue": "document",
+      "source": [
+        {
+          "key": "document",
+          "value": "Document"
+        },
+        {
+          "key": "wallet",
+          "value": "Wallet"
+        },
+        {
+          "key": "user",
+          "value": "Person"
+        },
+        {
+          "key": "building",
+          "value": "Building"
+        },
+        {
+          "key": "users",
+          "value": "People"
+        },
+        {
+          "key": "bank",
+          "value": "Bank"
+        },
+        {
+          "key": "calendar",
+          "value": "Calendar"
+        },
+        {
+          "key": "flag",
+          "value": "Flag"
+        },
+        {
+          "key": "folder",
+          "value": "Folder"
+        },
+        {
+          "key": "shield",
+          "value": "Shield"
+        }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "name": "displayA",
+      "label": "Card A display",
+      "defaultValue": "DEFAULT",
+      "source": [
+        {
+          "key": "DEFAULT",
+          "value": "Use the Field display setting"
+        },
+        {
+          "key": "TEXT",
+          "value": "Read-only text"
+        },
+        {
+          "key": "TILES",
+          "value": "Read-only KPI tiles"
+        },
+        {
+          "key": "INPUTS",
+          "value": "Editable fields in columns"
+        },
+        {
+          "key": "LAUNCHPAD",
+          "value": "Launchpad layout (tables, uploads)"
+        }
+      ]
+    },
+    {
+      "name": "A",
+      "label": "Card A",
+      "format": "CONTENTPICKER",
+      "allowCreatingGroup": true
+    },
+    {
+      "format": "TEXT",
+      "name": "labelB",
+      "label": "Card B title"
+    },
+    {
+      "format": "SELECT",
+      "name": "iconB",
+      "label": "Card B icon",
+      "defaultValue": "wallet",
+      "source": [
+        {
+          "key": "document",
+          "value": "Document"
+        },
+        {
+          "key": "wallet",
+          "value": "Wallet"
+        },
+        {
+          "key": "user",
+          "value": "Person"
+        },
+        {
+          "key": "building",
+          "value": "Building"
+        },
+        {
+          "key": "users",
+          "value": "People"
+        },
+        {
+          "key": "bank",
+          "value": "Bank"
+        },
+        {
+          "key": "calendar",
+          "value": "Calendar"
+        },
+        {
+          "key": "flag",
+          "value": "Flag"
+        },
+        {
+          "key": "folder",
+          "value": "Folder"
+        },
+        {
+          "key": "shield",
+          "value": "Shield"
+        }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "name": "displayB",
+      "label": "Card B display",
+      "defaultValue": "DEFAULT",
+      "source": [
+        {
+          "key": "DEFAULT",
+          "value": "Use the Field display setting"
+        },
+        {
+          "key": "TEXT",
+          "value": "Read-only text"
+        },
+        {
+          "key": "TILES",
+          "value": "Read-only KPI tiles"
+        },
+        {
+          "key": "INPUTS",
+          "value": "Editable fields in columns"
+        },
+        {
+          "key": "LAUNCHPAD",
+          "value": "Launchpad layout (tables, uploads)"
+        }
+      ]
+    },
+    {
+      "name": "B",
+      "label": "Card B",
+      "format": "CONTENTPICKER",
+      "allowCreatingGroup": true
+    },
+    {
+      "format": "TEXT",
+      "name": "labelC",
+      "label": "Card C title"
+    },
+    {
+      "format": "SELECT",
+      "name": "iconC",
+      "label": "Card C icon",
+      "defaultValue": "user",
+      "source": [
+        {
+          "key": "document",
+          "value": "Document"
+        },
+        {
+          "key": "wallet",
+          "value": "Wallet"
+        },
+        {
+          "key": "user",
+          "value": "Person"
+        },
+        {
+          "key": "building",
+          "value": "Building"
+        },
+        {
+          "key": "users",
+          "value": "People"
+        },
+        {
+          "key": "bank",
+          "value": "Bank"
+        },
+        {
+          "key": "calendar",
+          "value": "Calendar"
+        },
+        {
+          "key": "flag",
+          "value": "Flag"
+        },
+        {
+          "key": "folder",
+          "value": "Folder"
+        },
+        {
+          "key": "shield",
+          "value": "Shield"
+        }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "name": "displayC",
+      "label": "Card C display",
+      "defaultValue": "DEFAULT",
+      "source": [
+        {
+          "key": "DEFAULT",
+          "value": "Use the Field display setting"
+        },
+        {
+          "key": "TEXT",
+          "value": "Read-only text"
+        },
+        {
+          "key": "TILES",
+          "value": "Read-only KPI tiles"
+        },
+        {
+          "key": "INPUTS",
+          "value": "Editable fields in columns"
+        },
+        {
+          "key": "LAUNCHPAD",
+          "value": "Launchpad layout (tables, uploads)"
+        }
+      ]
+    },
+    {
+      "name": "C",
+      "label": "Card C",
+      "format": "CONTENTPICKER",
+      "allowCreatingGroup": true
+    },
+    {
+      "format": "TEXT",
+      "name": "labelD",
+      "label": "Card D title"
+    },
+    {
+      "format": "SELECT",
+      "name": "iconD",
+      "label": "Card D icon",
+      "defaultValue": "building",
+      "source": [
+        {
+          "key": "document",
+          "value": "Document"
+        },
+        {
+          "key": "wallet",
+          "value": "Wallet"
+        },
+        {
+          "key": "user",
+          "value": "Person"
+        },
+        {
+          "key": "building",
+          "value": "Building"
+        },
+        {
+          "key": "users",
+          "value": "People"
+        },
+        {
+          "key": "bank",
+          "value": "Bank"
+        },
+        {
+          "key": "calendar",
+          "value": "Calendar"
+        },
+        {
+          "key": "flag",
+          "value": "Flag"
+        },
+        {
+          "key": "folder",
+          "value": "Folder"
+        },
+        {
+          "key": "shield",
+          "value": "Shield"
+        }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "name": "displayD",
+      "label": "Card D display",
+      "defaultValue": "DEFAULT",
+      "source": [
+        {
+          "key": "DEFAULT",
+          "value": "Use the Field display setting"
+        },
+        {
+          "key": "TEXT",
+          "value": "Read-only text"
+        },
+        {
+          "key": "TILES",
+          "value": "Read-only KPI tiles"
+        },
+        {
+          "key": "INPUTS",
+          "value": "Editable fields in columns"
+        },
+        {
+          "key": "LAUNCHPAD",
+          "value": "Launchpad layout (tables, uploads)"
+        }
+      ]
+    },
+    {
+      "name": "D",
+      "label": "Card D",
+      "format": "CONTENTPICKER",
+      "allowCreatingGroup": true
+    },
+    {
+      "format": "TEXT",
+      "name": "labelE",
+      "label": "Card E title"
+    },
+    {
+      "format": "SELECT",
+      "name": "iconE",
+      "label": "Card E icon",
+      "defaultValue": "users",
+      "source": [
+        {
+          "key": "document",
+          "value": "Document"
+        },
+        {
+          "key": "wallet",
+          "value": "Wallet"
+        },
+        {
+          "key": "user",
+          "value": "Person"
+        },
+        {
+          "key": "building",
+          "value": "Building"
+        },
+        {
+          "key": "users",
+          "value": "People"
+        },
+        {
+          "key": "bank",
+          "value": "Bank"
+        },
+        {
+          "key": "calendar",
+          "value": "Calendar"
+        },
+        {
+          "key": "flag",
+          "value": "Flag"
+        },
+        {
+          "key": "folder",
+          "value": "Folder"
+        },
+        {
+          "key": "shield",
+          "value": "Shield"
+        }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "name": "displayE",
+      "label": "Card E display",
+      "defaultValue": "DEFAULT",
+      "source": [
+        {
+          "key": "DEFAULT",
+          "value": "Use the Field display setting"
+        },
+        {
+          "key": "TEXT",
+          "value": "Read-only text"
+        },
+        {
+          "key": "TILES",
+          "value": "Read-only KPI tiles"
+        },
+        {
+          "key": "INPUTS",
+          "value": "Editable fields in columns"
+        },
+        {
+          "key": "LAUNCHPAD",
+          "value": "Launchpad layout (tables, uploads)"
+        }
+      ]
+    },
+    {
+      "name": "E",
+      "label": "Card E",
+      "format": "CONTENTPICKER",
+      "allowCreatingGroup": true
+    }
+  ],
+  "defaultConfig": {
+    "cardLayout": "GRID",
+    "cardFont": "MODERN",
+    "NumCols": "AUTO",
+    "fieldDisplay": "READONLY_TEXT",
+    "highlightFirst": false,
+    "showCompleteness": true,
+    "badgeLabels": "Priority, Application Status, Status",
+    "iconA": "document",
+    "iconB": "wallet",
+    "iconC": "user",
+    "iconD": "building",
+    "iconE": "users",
+    "displayA": "DEFAULT",
+    "displayB": "DEFAULT",
+    "displayC": "DEFAULT",
+    "displayD": "DEFAULT",
+    "displayE": "DEFAULT",
+    "wideText": true,
+    "headerStyle": "NONE",
+    "headerIcon": "document",
+    "headerFacts": "Case ID, Status, Priority",
+    "headerToneFacts": "Status, Priority, Application Status",
+    "headerProgress": true
+  }
+}

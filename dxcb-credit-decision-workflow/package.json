@@ -1,16 +1,33 @@
 {
   "name": "dxcb-credit-decision-workflow",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "AidenAI Credit Decision custom Constellation components for Pega Launchpad",
+  "private": true,
+  "organization": "AidenAI",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "authenticate": "custom-dx-components authenticate",
+    "buildComponent": "custom-dx-components buildComponent",
+    "publish": "custom-dx-components publish",
+    "list": "custom-dx-components list",
+    "listPublishedLib": "custom-dx-components listPublished",
+    "lint:types": "tsc --noEmit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "@pega/custom-dx-components": "~25.1"
+    "@pega/cosmos-react-core": "~9.20.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "styled-components": "^6.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@pega/custom-dx-components": "~25.1",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^9.39.5",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.71.0"
+  },
+  "engines": {
+    "node": ">=24.4.1"
   }
 }

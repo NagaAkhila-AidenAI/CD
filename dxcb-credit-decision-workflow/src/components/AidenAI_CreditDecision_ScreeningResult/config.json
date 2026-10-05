@@ -1,0 +1,83 @@
+{
+  "name": "AidenAI_CreditDecision_ScreeningResult",
+  "label": "Screening Result",
+  "description": "Screening form with an editable lookup card, a risk score summary and grouped read-only result cards",
+  "organization": "AidenAI",
+  "version": "1.2.0",
+  "library": "CreditDecision",
+  "allowedApplications": [],
+  "componentKey": "AidenAI_CreditDecision_ScreeningResult",
+  "type": "Template",
+  "subtype": "FORM",
+  "icon": "ScreeningResult.svg",
+  "properties": [
+    {
+      "format": "SELECT",
+      "name": "cardFont",
+      "label": "Card font",
+      "defaultValue": "MODERN",
+      "source": [
+        { "key": "MODERN", "value": "Modern (Segoe UI)" },
+        { "key": "CLEAN", "value": "Clean (Calibri)" },
+        { "key": "FRIENDLY", "value": "Friendly (Trebuchet)" },
+        { "key": "CLASSIC", "value": "Classic serif (Georgia)" },
+        { "key": "THEME", "value": "Launchpad theme font" }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "name": "NumCols",
+      "label": "Columns in each card",
+      "defaultValue": "3",
+      "source": [
+        { "key": "1", "value": "One" },
+        { "key": "2", "value": "Two" },
+        { "key": "3", "value": "Three" }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "name": "editableCard",
+      "label": "Card that keeps editable inputs",
+      "defaultValue": "A",
+      "source": [
+        { "key": "A", "value": "Card A (for the AML Check ID)" },
+        { "key": "NONE", "value": "None (all cards read-only)" }
+      ]
+    },
+    {
+      "format": "BOOLEAN",
+      "name": "showRiskSummary",
+      "label": "Show the risk score summary",
+      "defaultValue": true
+    },
+    { "format": "TEXT", "name": "riskScoreLabel", "label": "Risk score field label" },
+    { "format": "TEXT", "name": "riskLevelLabel", "label": "Risk level field label" },
+    { "format": "TEXT", "name": "maxScore", "label": "Highest possible risk score" },
+    { "format": "TEXT", "name": "matchLabels", "label": "Match field labels (comma separated)" },
+    { "format": "TEXT", "name": "chipLabels", "label": "Status field labels to show as badges (comma separated)" },
+    { "format": "TEXT", "name": "labelA", "label": "Card A title" },
+    { "name": "A", "label": "Card A", "format": "CONTENTPICKER", "allowCreatingGroup": true },
+    { "format": "TEXT", "name": "labelB", "label": "Card B title" },
+    { "name": "B", "label": "Card B", "format": "CONTENTPICKER", "allowCreatingGroup": true },
+    { "format": "TEXT", "name": "labelC", "label": "Card C title" },
+    { "name": "C", "label": "Card C", "format": "CONTENTPICKER", "allowCreatingGroup": true },
+    { "format": "TEXT", "name": "labelD", "label": "Card D title" },
+    { "name": "D", "label": "Card D", "format": "CONTENTPICKER", "allowCreatingGroup": true }
+  ],
+  "defaultConfig": {
+    "NumCols": "3",
+    "cardFont": "MODERN",
+    "editableCard": "A",
+    "showRiskSummary": true,
+    "riskScoreLabel": "AML Risk Score",
+    "riskLevelLabel": "AML Risk Level",
+    "maxScore": "100",
+    "matchLabels": "AML Match Found, Sanction Match Found",
+    "chipLabels": "AML Status, Screening Status, PEP Status",
+    "labelA": "AML Check",
+    "labelB": "AML Screening",
+    "labelC": "Sanctions Screening",
+    "labelD": "Screening Outcome"
+  }
+}
