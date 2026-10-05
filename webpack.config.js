@@ -72,7 +72,8 @@ module.exports = (env, argv) => {
         filename: '[path][base].gz',
         algorithm: 'gzip',
         test: /\.js$|\.ts$|\.css$|\.html$/,
-        exclude: /constellation-core.*.js|bootstrap-shell.js/,
+        // constellation/prerequisite/js already ships its own .gz/.br copies
+        exclude: /constellation-core.*.js|bootstrap-shell.js|constellation\/prerequisite\/js\//,
         threshold: 10240,
         minRatio: 0.8
       })
@@ -82,7 +83,7 @@ module.exports = (env, argv) => {
         filename: '[path][base].br',
         algorithm: 'brotliCompress',
         test: /\.(js|ts|css|html|svg)$/,
-        exclude: /constellation-core.*.js|bootstrap-shell.js/,
+        exclude: /constellation-core.*.js|bootstrap-shell.js|constellation\/prerequisite\/js\//,
         compressionOptions: {
           params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 11 }
         },
@@ -109,7 +110,7 @@ module.exports = (env, argv) => {
         {
           // TODO: replace with your Launchpad app server URL (e.g. https://myapp-xyz-prod.pegalaunchpad.com)
           context: ['/dx'],
-          target: 'https://REPLACE_WITH_YOUR_LAUNCHPAD_SERVER.pegalaunchpad.com',
+          target: 'https://cluster-s14p4m3b12mthyp4qpszrxb0-frontend-us-east-1.cluster.lp.pegaservice.net',
           changeOrigin: true,
           secure: true
         }

@@ -1,0 +1,34 @@
+{
+  "components-directory-path": "src/components",
+  "server-config": {
+    "rulesetName": "CreditDecisionLib",
+    "rulesetVersion": "01-01-01",
+    "sourceOfComponents": "Server",
+    "devBuild": false,
+    "devServerPort": "3030",
+    "serverType": "launchpad",
+    "server": "https://cluster-s14p4m3b12mthyp4qpszrxb0-frontend-us-east-1.cluster.lp.pegaservice.net",
+    "clientId_comment": "Client ID of the OAuth 2.0 client registration created in Launchpad Studio > Administration setup",
+    "clientId": "J0o1sK3Mw0mav130",
+    "clientSecret_comment": "Keep empty for authCode; if your registration is Confidential, enter it locally and do not commit it",
+    "clientSecret": "yhEz1qvsj5BwpJNCZysmFkQz79TziTim",
+    "grantType": "authCode",
+    "redirectUri_comment": "Same redirect URL the website project uses; it is already registered on this OAuth client and proven to work. Stop 'npm start' first (both use port 6006).",
+    "redirectUri": "http://localhost:6006/",
+    "authService": "pega",
+    "cert_and_key_comment": "Pega's development certificate for the local https://localhost:4010 login page (copied from the DXCB project template)",
+    "cert": "./keys/dxcb.crt",
+    "key": "./keys/dxcb.key"
+  },
+  "component": {
+    "library": "CreditDecision",
+    "type": "",
+    "version": "1.0.0",
+    "subtype": "",
+    "description": "",
+    "icon": ""
+  },
+  "usePromotedWebPack": false,
+  "libraryModeCL": false,
+  "showDebug": false
+}

@@ -1,0 +1,40 @@
+{
+  "name": "AidenAI_CreditDecision_PipelineOverview",
+  "label": "Pipeline Overview",
+  "description": "Landing page widget with key figures, open applications by stage and a needs-attention list from a case data view",
+  "organization": "AidenAI",
+  "version": "1.0.0",
+  "library": "CreditDecision",
+  "allowedApplications": [],
+  "componentKey": "AidenAI_CreditDecision_PipelineOverview",
+  "type": "Widget",
+  "subtype": "PAGE",
+  "icon": "PipelineOverview.svg",
+  "properties": [
+    { "name": "heading", "label": "Heading", "format": "TEXT" },
+    { "name": "dataViewName", "label": "Case list data view (e.g. the data page behind the case list)", "format": "TEXT" },
+    { "name": "stages", "label": "Stages in order (comma separated)", "format": "TEXT" },
+    { "name": "statusField", "label": "Status field", "format": "TEXT" },
+    { "name": "idField", "label": "Case ID field", "format": "TEXT" },
+    { "name": "borrowerField", "label": "Borrower name field", "format": "TEXT" },
+    { "name": "priorityField", "label": "Priority field", "format": "TEXT" },
+    { "name": "amountField", "label": "Requested amount field", "format": "TEXT" },
+    { "name": "updatedField", "label": "Last updated field", "format": "TEXT" },
+    { "name": "currency", "label": "Currency code for amounts (e.g. EUR)", "format": "TEXT" },
+    { "name": "highPriorityValues", "label": "Priority values that need attention (comma separated)", "format": "TEXT" },
+    { "name": "staleDays", "label": "Flag cases with no update for this many days", "format": "TEXT" },
+    { "name": "maxAttention", "label": "Most cases to list under Needs attention", "format": "TEXT" },
+    { "name": "showDiagnostics", "label": "Show available fields (for setup)", "format": "BOOLEAN", "defaultValue": false }
+  ],
+  "defaultConfig": {
+    "heading": "Application pipeline",
+    "stages": "Application Intake, Screening Check, Credit Appraisal, Credit Rating, Committee Review, Sanction, Documentation Legal, Compliance Check, Disbursement",
+    "statusField": "pyStatusWork",
+    "idField": "pyID",
+    "updatedField": "pxUpdateDateTime",
+    "highPriorityValues": "High, Critical, Urgent",
+    "staleDays": "7",
+    "maxAttention": "8",
+    "showDiagnostics": false
+  }
+}

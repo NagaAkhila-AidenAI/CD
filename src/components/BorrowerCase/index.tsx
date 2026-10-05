@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -41,10 +41,24 @@ interface BorrowerCaseProps {
   onBack: () => void;
   onWithdraw: () => void;
   onSubmitNewBorrower: (borrowerType: BusinessType, data: Record<string, unknown>) => void;
+  onSubmitDocuments?: (fundingData: Record<string, string>, documentNames: string[]) => void;
+  // Opens a section from outside (e.g. Screening Check "Ineligible"); a new nonce re-triggers it
+  jumpToSection?: { section: SectionKey; nonce: number };
 }
 
-export default function BorrowerCase({ mode, onBack, onWithdraw, onSubmitNewBorrower }: BorrowerCaseProps) {
+export default function BorrowerCase({
+  mode,
+  onBack,
+  onWithdraw,
+  onSubmitNewBorrower,
+  onSubmitDocuments,
+  jumpToSection
+}: BorrowerCaseProps) {
   const [activeSection, setActiveSection] = useState<SectionKey>('borrowerProfile');
+
+  useEffect(() => {
+    if (jumpToSection) setActiveSection(jumpToSection.section);
+  }, [jumpToSection?.nonce]);
   const [businessType, setBusinessType] = useState<BusinessType>('');
   const [countryCode, setCountryCode] = useState('+1');
   const [formData, setFormData] = useState<Record<string, string>>({});
@@ -145,6 +159,7 @@ export default function BorrowerCase({ mode, onBack, onWithdraw, onSubmitNewBorr
     } else if (isDocuments) {
       // TODO: wire to the real document-upload case action once the DX API is connected
       console.log('Submit documents', documentNames);
+      onSubmitDocuments?.(fundingData, documentNames);
     }
   };
 

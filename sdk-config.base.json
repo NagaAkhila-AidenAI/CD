@@ -3,7 +3,9 @@
   "theme": "light",
   "authConfig": {
     "authService": "pega",
-    "mashupGrantType": "authCode"
+    "mashupGrantType": "authCode",
+    "noPKCE_comment": "The confidential Launchpad OAuth client rejects PKCE. Needs patches/@pega+auth+0.2.47.patch (applied by npm install). Remove once a public PKCE client is registered.",
+    "noPKCE": true
   },
   "serverConfig": {
     "serverType": "launchpad",
